@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36123e1580604ef41af4249e79a4a519, type: 3}
+  m_Name: Wood
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 11400000, guid: f416bd70765573f40b7092d91b9a5af7, type: 2}
+  clip:
+  - {fileID: 8300000, guid: db52622e941047a4989e5a4cc47c4a7e, type: 3}
+  - {fileID: 8300000, guid: 8a4a5d15c1f70e14593a27c5d6849f16, type: 3}
+  - {fileID: 8300000, guid: 3dc0d67c4c4f8c443a058f1d439e7def, type: 3}
+  - {fileID: 8300000, guid: 5930a49bfd2626e469817183a0d288b4, type: 3}
+  - {fileID: 8300000, guid: 5725723decc34b040946ea821543e4e1, type: 3}
+  - {fileID: 8300000, guid: 866178d5a967a774fa7057d82f763eec, type: 3}
+  floorType: 1
