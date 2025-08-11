@@ -32,7 +32,7 @@ public class triggerBuilding : MonoBehaviour
         }
         else
         {
-            Debug.LogError("กรุณากำหนด Object To Instantiate และ Source Transform ใน Inspector!");
+            
         }
     }
 }

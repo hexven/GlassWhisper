@@ -54,8 +54,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableExternalAlpha: 0
-    - _GlitchStrength: 5
-    - _NoiseAmont: 5
+    - _GlitchStrength: 0
+    - _NoiseAmont: 0
     - _ScanLimeStrength: 0
     - _ZWrite: 0
     m_Colors:
