@@ -69,6 +69,9 @@ TagManager:
   - name: Blood
     uniqueID: 3909313565
     locked: 0
+  - name: walkinfrontall
+    uniqueID: 871757157
+    locked: 0
   - name: Collision
     uniqueID: 1003793817
     locked: 0
