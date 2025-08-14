@@ -144,7 +144,7 @@ public class PlayerMovement : MonoBehaviour
                 lastFootstepTime = Time.time;
                 lastClipIndex = clipIndex;
 
-                Debug.Log($"Playing footstep: {selectedClip.name} at {Time.time}");
+
             }
         }
     }

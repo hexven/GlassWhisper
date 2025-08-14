@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -104,15 +104,23 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 969
-        height: 1334
+        y: 667
+        width: 484
+        height: 667
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
-      outline: []
-      physicsShape: []
+      outline:
+      - - {x: 0, y: -333.5}
+        - {x: 242.5, y: 0}
+        - {x: 0, y: 333.5}
+        - {x: -242.5, y: 0}
+      physicsShape:
+      - - {x: 0, y: -333.5}
+        - {x: 242.5, y: 0}
+        - {x: 0, y: 333.5}
+        - {x: -242.5, y: 0}
       tessellationDetail: -1
       bones: []
       spriteID: 784a3eedb4ab4fc40800000000000000
@@ -121,11 +129,93 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: IMG_5665_1
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 667
+        width: 484
+        height: 667
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 0, y: -333.5}
+        - {x: 242.5, y: 0}
+        - {x: 0, y: 333.5}
+        - {x: -242.5, y: 0}
+      physicsShape:
+      - - {x: 0, y: -333.5}
+        - {x: 242.5, y: 0}
+        - {x: 0, y: 333.5}
+        - {x: -242.5, y: 0}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2df84517351dffe499b616a41814cd57
+      internalID: 1265098253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IMG_5665_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 484
+        height: 667
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 0, y: -333.5}
+        - {x: 242.5, y: 0}
+        - {x: 0, y: 333.5}
+        - {x: -242.5, y: 0}
+      physicsShape:
+      - - {x: 0, y: -333.5}
+        - {x: 242.5, y: 0}
+        - {x: 0, y: 333.5}
+        - {x: -242.5, y: 0}
+      tessellationDetail: 0
+      bones: []
+      spriteID: e810d224846c4ae4682e2e46d547b185
+      internalID: 1129659197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IMG_5665_3
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 0
+        width: 484
+        height: 667
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d585d2b7fd5c36b4e824432ce90d25df
+      internalID: -466770882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 3c35faf76c81bdd4ebd0923a155624a5
     internalID: 0
     vertices: []
     indices: 
@@ -136,6 +226,9 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       IMG_5665_0: 5545261876224697479
+      IMG_5665_1: 1265098253
+      IMG_5665_2: 1129659197
+      IMG_5665_3: -466770882
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
