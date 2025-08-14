@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class SkipGoodend : MonoBehaviour
 {
     public PlayableDirector timelineDirector;
-    public List<double> sceneStartTimes = new List<double> { 1.0, 11.0, 21.0, 31.0, 41.0, 54.5 };
+    public List<double> sceneStartTimes = new List<double> { 1.0, 11.0, 21.0, 31.0, 41.0, 54.5, 60.0, 63.0, 67.0 };
     private int currentSceneIndex = 0;
     public string nextSceneName;
 
