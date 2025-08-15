@@ -14,6 +14,7 @@ TagManager:
   - Grass
   - Dirt
   - wall
+  - dialoge
   layers:
   - Default
   - TransparentFX

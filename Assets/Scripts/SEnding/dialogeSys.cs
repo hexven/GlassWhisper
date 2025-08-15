@@ -11,23 +11,44 @@ public class dialogeSys : MonoBehaviour
     public float textSpeed;
 
     private int index;
+
+    public bool start;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        dialogeBox.SetActive(false);
+        start = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (textDialoge.text == lines[index])
+        //if (start == true)
+        //{
+        //    //textDialoge.text = string.Empty;
+        //    //startDialoge();
+        //    start = false;
+        //}
+
+        if (Input.GetMouseButtonDown(0) && start == true)
         {
-            nextLine();
-        }
-        else
-        {
+            start = false;
             StopAllCoroutines();
-            textDialoge.text = lines[index];
+
+            //if (textDialoge.text == lines[index])
+            //{
+            //    nextLine();
+            //}
+            //else
+            //{
+            //    StopAllCoroutines();
+            //    textDialoge.text = lines[index];
+            //}
+        }
+
+        if (start == false)
+        {
+            dialogeBox.SetActive (false);
         }
     }
 
@@ -35,6 +56,7 @@ public class dialogeSys : MonoBehaviour
     {
         index = 0;
         StartCoroutine(Typeline());
+        //print("lol");
     }
 
     void nextLine()
@@ -48,6 +70,7 @@ public class dialogeSys : MonoBehaviour
         else
         {
             dialogeBox.SetActive(false);
+            //start = false;
             ////index = 0;
             //end = true;
             //start = false;
@@ -66,11 +89,28 @@ public class dialogeSys : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (chooseSystem.note2 == false)
+
+        //if (collision.CompareTag("dialoge"))
+        //{
+        //    start = true;
+        //}
+
+        if (chooseSystem.note2 == false && collision.CompareTag("Player"))
         {
+            start = true;
+            textDialoge.text = string.Empty;
             startDialoge();
+            dialogeBox.SetActive(true);
+            print("onTrigger");
         }
         //startDialoge();
+        //if (chooseSystem.note2 == false && start == true && collision.CompareTag("dialoge"))
+        //{
+        //    start = false;
+        //    startDialoge();
+        //    dialogeBox.SetActive(true);
+        //    print("onTrigger");
+        //}
     }
 
 }
