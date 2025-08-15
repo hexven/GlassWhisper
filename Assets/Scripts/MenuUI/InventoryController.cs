@@ -111,6 +111,11 @@ public class InventoryController : MonoBehaviour
                 //{
                 //    chooseSystem.key = true;
                 //}
+
+                else if (Item.idStatic == 25)
+                {
+                    chooseSystem.note2 = true;
+                }
                 return true;
             }
         }

@@ -9,6 +9,7 @@ public class chooseSystem : MonoBehaviour
     public static bool trash = false;
     public static bool money = false;
     public static bool nahh3 = false;
+    public static bool note2 = false;
     public static bool box = false;
     public static bool mouseTrap = false;
     public static bool book1 = false;
