@@ -127,7 +127,7 @@ PrefabInstance:
     - target: {fileID: 8023274806543833871, guid: 63542f14cb076f14e8ee9771f0119be7, type: 3}
       propertyPath: noteImage
       value: 
-      objectReference: {fileID: 5545261876224697479, guid: 01a218afee125b549acf01bb3ae7e57d, type: 3}
+      objectReference: {fileID: 21300000, guid: 01a218afee125b549acf01bb3ae7e57d, type: 3}
     - target: {fileID: 8023274806543833871, guid: 63542f14cb076f14e8ee9771f0119be7, type: 3}
       propertyPath: Description
       value: "\u0E2D\u0E30\u0E44\u0E23\u0E40\u0E19\u0E35\u0E48\u0E22..."
