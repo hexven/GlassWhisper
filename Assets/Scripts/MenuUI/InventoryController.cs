@@ -116,6 +116,11 @@ public class InventoryController : MonoBehaviour
                 {
                     chooseSystem.note2 = true;
                 }
+
+                else if (Item.idStatic == 26)
+                {
+                    chooseSystem.nahh6 = true;
+                }
                 return true;
             }
         }

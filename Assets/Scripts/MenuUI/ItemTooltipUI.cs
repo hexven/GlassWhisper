@@ -28,6 +28,7 @@ public class ItemTooltipUI : MonoBehaviour
     private Item currentBoxItem;
     private Slot currentBoxSlot;
     public GameObject openBoxButton;
+    public GameObject endingButton;
 
     private void Awake()
     {

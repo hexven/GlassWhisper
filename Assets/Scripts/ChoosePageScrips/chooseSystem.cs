@@ -19,6 +19,7 @@ public class chooseSystem : MonoBehaviour
     public static bool note = false;
     public static bool oldPic = false;
     public static bool key = false;
+    public static bool nahh6 = false;
     public GameObject confirmPanel;
     public GameObject Suspect04;
     public GameObject Suspect05;
