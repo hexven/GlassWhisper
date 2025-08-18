@@ -1,88 +1,87 @@
 using Unity.Cinemachine;
 using UnityEditor.Experimental;
 using UnityEngine;
-
 using System.Collections;
 
 public class MapTransation : MonoBehaviour
 {
-    [SerializeField] PolygonCollider2D mapBoundry;
-    CinemachineConfiner2D confiner;
-    [SerializeField] Direction direction;
-    [SerializeField] Transform teleportTargetPosition;
+    // การตั้งค่าพื้นฐานสำหรับ Map Transition
+    [SerializeField] PolygonCollider2D mapBoundry; // ขอบเขตของแมพใหม่
+    CinemachineConfiner2D confiner; // ตัวควบคุมขอบเขตกล้อง
+    [SerializeField] Direction direction; // ทิศทางการเคลื่อนย้ายผู้เล่น
+    [SerializeField] Transform teleportTargetPosition; // ตำแหน่งเป้าหมายสำหรับ Teleport
 
+    // การตั้งค่าเอฟเฟ็กต์การเปลี่ยนแมพ
     [Header("Transition Settings")]
-    [SerializeField] bool useFadeTransition = true; // เพิ่มตัวเลือกเปิด/ปิด fade
+    [SerializeField] bool useFadeTransition = true; // เปิด/ปิดเอฟเฟ็กต์ fade
+    [SerializeField] bool oneTimeUse = false; // ใช้ได้แค่ครั้งเดียว
 
+    // การตั้งค่าเงื่อนไขไอเท็มที่ต้องการ
     [Header("Item Requirements")]
-    [SerializeField] bool requireItem = false; // เปิด/ปิดการเช็คไอเทม
-    [SerializeField] RequiredItemType requiredItemType = RequiredItemType.SingleBoolean; // ประเภทการเช็ค
+    [SerializeField] bool requireItem = false; // เปิด/ปิดการเช็คไอเท็ม
+    [SerializeField] RequiredItemType requiredItemType = RequiredItemType.SingleBoolean; // ประเภทการเช็คไอเท็ม
 
+    // การตั้งค่าสำหรับไอเท็มประเภท Boolean เดี่ยว
     [Header("Single Boolean Item")]
-    [SerializeField] string booleanItemName = "key"; // ชื่อ boolean variable ที่ต้องการ
+    [SerializeField] string booleanItemName = "key"; // ชื่อตัวแปร boolean ที่ต้องการ
 
+    // การตั้งค่าสำหรับไอเท็มประเภท Boolean หลายตัว
     [Header("Multiple Boolean Items")]
-    [SerializeField] string[] multipleItemNames = { "nahh8", "oldPic" }; // ไอเทมหลายตัว
-    [SerializeField] bool useORLogic = false; // true = มีตัวใดตัวหนึ่ง, false = ต้องมีครบทุกตัว (AND)
+    [SerializeField] string[] multipleItemNames = { "nahh8", "oldPic" }; // รายชื่อไอเท็มหลายตัว
+    [SerializeField] bool useORLogic = false; // true = มีตัวใดตัวหนึ่ง, false = ต้องมีครบทุกตัว
 
+    // การตั้งค่าสำหรับระบบ Choose Item
     [Header("Choose Item System")]
     [SerializeField] int[] requiredChooseItems = { 2, 1, 3 }; // ค่าที่ต้องการสำหรับ chooseItem01, 02, 03
     [SerializeField] bool checkChooseItems = false; // เปิด/ปิดการเช็ค choose items
 
-    [Header("Feedback Messages")]
-    [SerializeField] bool showFeedbackMessage = true;
-    [SerializeField] string noItemMessage = "คุณต้องมีไอเทมที่จำเป็นก่อน";
-    [SerializeField] float messageDisplayTime = 2f;
-    [SerializeField] GameObject messagePanel; // Panel สำหรับแสดงข้อความ
-    [SerializeField] UnityEngine.UI.Text messageText; // Text component สำหรับแสดงข้อความ
-
+    // การตั้งค่าเอฟเฟ็กต์ Fade
     [Header("Fade Settings")]
-    [SerializeField] float fadeSpeed = 2f;
-    [SerializeField] GameObject fadeCanvas;
-    [SerializeField] UnityEngine.UI.Image fadeImage;
+    [SerializeField] float fadeSpeed = 2f; // ความเร็วของเอฟเฟ็กต์ fade
+    [SerializeField] GameObject fadeCanvas; // Canvas สำหรับเอฟเฟ็กต์ fade
+    [SerializeField] UnityEngine.UI.Image fadeImage; // Image component สำหรับ fade
 
+    // Enums สำหรับกำหนดทิศทางและประเภทการเช็คไอเท็ม
     enum Direction { Up, Down, Left, Right, Teleport }
     enum RequiredItemType { SingleBoolean, MultipleBooleans, ChooseItems, BooleanAndChoose, AnyOfMultipleBooleans }
 
+    // ตัวแปรควบคุมสถานะการเปลี่ยนแมพ
     private bool isTransitioning = false;
+    private bool hasBeenUsed = false; // ตรวจสอบว่าได้ใช้ไปแล้วหรือไม่
 
+    // ฟังก์ชันเริ่มต้น - หา confiner และสร้าง fade canvas
     private void Awake()
     {
         confiner = FindObjectOfType<CinemachineConfiner2D>();
 
-        // สร้าง fade canvas เฉพาะเมื่อต้องการใช้ fade
+        // สร้าง fade canvas เฉพาะเมื่อต้องการใช้ fade transition
         if (useFadeTransition && fadeCanvas == null)
         {
             CreateFadeCanvas();
         }
-
-        // ซ่อน message panel ตอนเริ่มต้น
-        if (messagePanel != null)
-        {
-            messagePanel.SetActive(false);
-        }
     }
 
+    // สร้าง Canvas สำหรับเอฟเฟ็กต์ fade แบบ dynamic
     private void CreateFadeCanvas()
     {
-        // สร้าง Canvas
+        // สร้าง GameObject สำหรับ Canvas
         GameObject canvasObj = new GameObject("FadeCanvas");
         Canvas canvas = canvasObj.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 1000; // ให้อยู่ด้านบนสุด
+        canvas.sortingOrder = 1000; // ให้อยู่ด้านบนสุดของ UI
 
-        // สร้าง CanvasScaler
+        // เพิ่ม Components ที่จำเป็นสำหรับ Canvas
         canvasObj.AddComponent<UnityEngine.UI.CanvasScaler>();
         canvasObj.AddComponent<UnityEngine.UI.GraphicRaycaster>();
 
-        // สร้าง Image สำหรับ fade
+        // สร้าง Image Object สำหรับเอฟเฟ็กต์ fade
         GameObject imageObj = new GameObject("FadeImage");
         imageObj.transform.SetParent(canvasObj.transform, false);
 
         fadeImage = imageObj.AddComponent<UnityEngine.UI.Image>();
-        fadeImage.color = new Color(0, 0, 0, 0); // เริ่มต้นเป็นใส
+        fadeImage.color = new Color(0, 0, 0, 0); // เริ่มต้นเป็นสีใส
 
-        // ตั้งค่าให้ครอบคลุมหน้าจอทั้งหมด
+        // ตั้งค่า RectTransform ให้ครอบคลุมหน้าจอทั้งหมด
         RectTransform rectTransform = fadeImage.GetComponent<RectTransform>();
         rectTransform.anchorMin = Vector2.zero;
         rectTransform.anchorMax = Vector2.one;
@@ -90,26 +89,29 @@ public class MapTransation : MonoBehaviour
         rectTransform.anchoredPosition = Vector2.zero;
 
         fadeCanvas = canvasObj;
-
-        // ซ่อน canvas ไว้ตอนเริ่มต้น
-        fadeCanvas.SetActive(false);
+        fadeCanvas.SetActive(false); // ซ่อน canvas ไว้ตอนเริ่มต้น
     }
 
+    // ตรวจจับการชนของผู้เล่นกับ Trigger
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // ตรวจสอบว่าเป็นผู้เล่นและไม่อยู่ในระหว่างการเปลี่ยนแมพ
         if (collision.gameObject.CompareTag("Player") && !isTransitioning)
         {
-            // เช็คไอเทมก่อนทำ transition
+            // ตรวจสอบว่าถ้าเป็น one time use และได้ใช้ไปแล้ว ให้ไม่ทำงาน
+            if (oneTimeUse && hasBeenUsed) return;
+
+            // เช็คเงื่อนไขไอเท็มก่อนทำการเปลี่ยนแมพ
             if (requireItem && !CheckItemRequirements())
             {
-                if (showFeedbackMessage)
-                {
-                    StartCoroutine(ShowMessage(noItemMessage));
-                }
-                return; // ไม่ทำ transition ถ้าไม่มีไอเทม
+                // หากไม่มีไอเท็มที่จำเป็น ให้ไม่ทำการเปลี่ยนแมพ
+                return;
             }
 
-            // เลือกใช้ transition แบบไหนตามการตั้งค่า
+            // เมื่อทำการเปลี่ยนแมพแล้ว ให้เซ็ตว่าได้ใช้ไปแล้ว
+            if (oneTimeUse) hasBeenUsed = true;
+
+            // เลือกประเภทการเปลี่ยนแมพตามการตั้งค่า
             if (useFadeTransition)
             {
                 StartCoroutine(TransitionWithFade(collision.gameObject));
@@ -121,6 +123,7 @@ public class MapTransation : MonoBehaviour
         }
     }
 
+    // ฟังก์ชันหลักสำหรับเช็คเงื่อนไขไอเท็ม
     private bool CheckItemRequirements()
     {
         switch (requiredItemType)
@@ -142,10 +145,11 @@ public class MapTransation : MonoBehaviour
                 return boolResult && CheckChooseItems();
 
             default:
-                return true;
+                return true; // หากไม่มีเงื่อนไข ให้ผ่านทุกครั้ง
         }
     }
 
+    // เช็คไอเท็มประเภท Boolean เดี่ยว
     private bool CheckSingleBooleanItem()
     {
         if (string.IsNullOrEmpty(booleanItemName))
@@ -164,6 +168,7 @@ public class MapTransation : MonoBehaviour
         return false;
     }
 
+    // เช็คไอเท็มประเภท Boolean หลายตัว (OR logic - มีตัวใดตัวหนึ่งก็พอ)
     private bool CheckAnyBooleanItems()
     {
         if (multipleItemNames == null || multipleItemNames.Length == 0)
@@ -181,7 +186,7 @@ public class MapTransation : MonoBehaviour
             {
                 if ((bool)field.GetValue(null))
                 {
-                    return true; // ถ้ามีไอเทมใดไอเทมหนึ่งที่เป็น true ให้ return true
+                    return true; // พบไอเท็มที่เป็น true
                 }
             }
             else
@@ -190,9 +195,10 @@ public class MapTransation : MonoBehaviour
             }
         }
 
-        return false; // ไม่มีไอเทมใดเป็น true
+        return false; // ไม่มีไอเท็มใดเป็น true
     }
 
+    // เช็คไอเท็มประเภท Boolean หลายตัว (AND logic - ต้องมีครบทุกตัว)
     private bool CheckAllBooleanItems()
     {
         if (multipleItemNames == null || multipleItemNames.Length == 0)
@@ -210,7 +216,7 @@ public class MapTransation : MonoBehaviour
             {
                 if (!(bool)field.GetValue(null))
                 {
-                    return false; // ถ้ามีไอเทมใดไอเทมหนึ่งที่เป็น false ให้ return false
+                    return false; // พบไอเท็มที่เป็น false
                 }
             }
             else
@@ -223,6 +229,7 @@ public class MapTransation : MonoBehaviour
         return true; // ทุกไอเท็มเป็น true
     }
 
+    // เช็คไอเท็มประเภท Choose Items
     private bool CheckChooseItems()
     {
         if (!checkChooseItems || requiredChooseItems == null)
@@ -276,23 +283,7 @@ public class MapTransation : MonoBehaviour
         return true;
     }
 
-    private IEnumerator ShowMessage(string message)
-    {
-        if (messagePanel != null && messageText != null)
-        {
-            messageText.text = message;
-            messagePanel.SetActive(true);
-
-            yield return new WaitForSeconds(messageDisplayTime);
-
-            messagePanel.SetActive(false);
-        }
-        else
-        {
-            Debug.Log(message);
-        }
-    }
-
+    // การเปลี่ยนแมพแบบมีเอฟเฟ็กต์ fade
     private IEnumerator TransitionWithFade(GameObject player)
     {
         isTransitioning = true;
@@ -303,11 +294,11 @@ public class MapTransation : MonoBehaviour
         // Fade Out (จากใสไปเป็นดำ)
         yield return StartCoroutine(FadeToBlack());
 
-        // อัปเดตตำแหน่งผู้เล่นและ camera bounds
+        // อัปเดตตำแหน่งผู้เล่นและขอบเขตกล้อง
         confiner.BoundingShape2D = mapBoundry;
         UpdatePlayerPosition(player);
 
-        // รอให้ camera ติดตามผู้เล่นไปยังตำแหน่งใหม่
+        // รอให้กล้องติดตามผู้เล่นไปยังตำแหน่งใหม่
         yield return new WaitForSeconds(0.1f);
 
         // Fade In (จากดำไปเป็นใส)
@@ -319,20 +310,22 @@ public class MapTransation : MonoBehaviour
         isTransitioning = false;
     }
 
+    // การเปลี่ยนแมพแบบทันที (ไม่มีเอฟเฟ็กต์)
     private IEnumerator InstantTransition(GameObject player)
     {
         isTransitioning = true;
 
-        // อัปเดตตำแหน่งผู้เล่นและ camera bounds ทันที
+        // อัปเดตตำแหน่งผู้เล่นและขอบเขตกล้องทันที
         confiner.BoundingShape2D = mapBoundry;
         UpdatePlayerPosition(player);
 
-        // รอ frame เดียวเพื่อให้ transition เสร็จสิ้น
+        // รอ 1 frame เพื่อให้การเปลี่ยนแปลงเสร็จสิ้น
         yield return null;
 
         isTransitioning = false;
     }
 
+    // เอฟเฟ็กต์ Fade Out (จากใสไปเป็นดำ)
     private IEnumerator FadeToBlack()
     {
         Color startColor = fadeImage.color;
@@ -350,10 +343,11 @@ public class MapTransation : MonoBehaviour
         fadeImage.color = targetColor;
     }
 
+    // เอฟเฟ็กต์ Fade In (จากดำไปเป็นใส)
     private IEnumerator FadeToTransparent()
     {
         Color startColor = fadeImage.color;
-        Color targetColor = new Color(0, 0, 0, 0); // ใส
+        Color targetColor = new Color(0, 0, 0, 0); // สีใส
 
         float elapsed = 0f;
 
@@ -367,14 +361,17 @@ public class MapTransation : MonoBehaviour
         fadeImage.color = targetColor;
     }
 
+    // อัปเดตตำแหน่งผู้เล่นตามทิศทางที่กำหนด
     private void UpdatePlayerPosition(GameObject player)
     {
+        // หากเป็น Teleport ให้เคลื่อนย้ายไปยังตำแหน่งเป้าหมายที่กำหนด
         if (direction == Direction.Teleport)
         {
             player.transform.position = teleportTargetPosition.position;
             return;
         }
 
+        // เคลื่อนย้ายผู้เล่นตามทิศทางที่กำหนด
         Vector3 additivePos = player.transform.position;
         switch (direction)
         {
@@ -394,31 +391,33 @@ public class MapTransation : MonoBehaviour
         player.transform.position = additivePos;
     }
 
-    // ฟังชันสำหรับเปลี่ยนการตั้งค่า fade ขณะรันไทม์
+    // === Public Functions สำหรับควบคุมจากภายนอก ===
+
+    // เปลี่ยนการตั้งค่า fade transition ขณะรันไทม์
     public void SetUseFadeTransition(bool useFade)
     {
         useFadeTransition = useFade;
 
-        // ถ้าเปิดใช้ fade และยังไม่มี canvas ให้สร้างใหม่
+        // สร้าง fade canvas ใหม่หากต้องการใช้แต่ยังไม่มี
         if (useFadeTransition && fadeCanvas == null)
         {
             CreateFadeCanvas();
         }
     }
 
-    // ฟังชันสำหรับเช็คสถานะปัจจุบัน
+    // ตรวจสอบสถานะปัจจุบันของ fade transition
     public bool IsUsingFadeTransition()
     {
         return useFadeTransition;
     }
 
-    // ฟังชันสำหรับเปลี่ยนการตั้งค่าไอเทม
+    // เปลี่ยนการตั้งค่าการเช็คไอเท็ม
     public void SetRequireItem(bool requireItem)
     {
         this.requireItem = requireItem;
     }
 
-    // ฟังชันสำหรับเช็คว่าผู้เล่นมีไอเทมหรือไม่
+    // ตรวจสอบว่าผู้เล่นมีไอเท็มที่จำเป็นหรือไม่
     public bool HasRequiredItems()
     {
         return !requireItem || CheckItemRequirements();

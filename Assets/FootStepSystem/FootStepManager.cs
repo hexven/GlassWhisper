@@ -39,10 +39,9 @@ public class FootstepManager : MonoBehaviour
     [SerializeField] private float tileCheckInterval = 0.1f;
 
     [Header("Debug")]
-    [SerializeField] private bool enableDebugLogs = true;
     [SerializeField] private bool forcePlayOnStart = false;
     [SerializeField] private FloorType testFloorType = FloorType.Grass;
-    [SerializeField] private bool playBackgroundOnStart = true; // เพิ่มตัวนี้
+    [SerializeField] private bool playBackgroundOnStart = true;
 
     // Footstep variables
     private Dictionary<FloorType, FootstepSounds> footstepSoundsDict;
@@ -60,24 +59,22 @@ public class FootstepManager : MonoBehaviour
 
     private void Awake()
     {
-
+        // เรียก Initialize ใน Awake เพื่อให้พร้อมใช้งานก่อน Start
+        InitializeFootstepSystem();
+        InitializeBackgroundSystem();
     }
 
     private void Start()
     {
-
-
         // ตรวจสอบและเล่นเสียง background ทันทีที่เริ่มเกม
         if (enableBackgroundAudio && playerTransform != null && mapManager != null && playBackgroundOnStart)
         {
-            // รอ 1 frame แล้วค่อยตรวจสอบ tile
             StartCoroutine(InitialTileCheck());
         }
 
         // ทดสอบเล่นเสียงทันทีเมื่อเริ่มเกม (ถ้าเปิด Force Play On Start)
         if (forcePlayOnStart && enableBackgroundAudio)
         {
-
             PlayBackgroundAudio(testFloorType);
         }
     }
@@ -86,8 +83,6 @@ public class FootstepManager : MonoBehaviour
     {
         // รอ 1 frame เพื่อให้ทุกอย่างเซ็ตอัพเสร็จ
         yield return null;
-
-
 
         if (playerTransform != null && mapManager != null)
         {
@@ -98,7 +93,6 @@ public class FootstepManager : MonoBehaviour
             // เล่นเสียง background ทันที
             PlayBackgroundAudio(currentFloorType);
         }
-
     }
 
     private void Update()
@@ -124,7 +118,6 @@ public class FootstepManager : MonoBehaviour
             footstepAudioSource = gameObject.AddComponent<AudioSource>();
             footstepAudioSource.playOnAwake = false;
             footstepAudioSource.spatialBlend = 0f;
-
         }
 
         footstepSoundsDict = new Dictionary<FloorType, FootstepSounds>();
@@ -134,7 +127,6 @@ public class FootstepManager : MonoBehaviour
         {
             footstepSoundsDict[footstepSound.floorType] = footstepSound;
             lastClipIndex[footstepSound.floorType] = -1;
-
         }
     }
 
@@ -146,10 +138,7 @@ public class FootstepManager : MonoBehaviour
             backgroundAudioSource.playOnAwake = false;
             backgroundAudioSource.spatialBlend = 0f;
             backgroundAudioSource.loop = true;
-
         }
-
-
 
         backgroundSoundsDict = new Dictionary<FloorType, BackgroundSounds>();
         lastBackgroundClipIndex = new Dictionary<FloorType, int>();
@@ -158,7 +147,6 @@ public class FootstepManager : MonoBehaviour
         {
             backgroundSoundsDict[backgroundSound.floorType] = backgroundSound;
             lastBackgroundClipIndex[backgroundSound.floorType] = -1;
-
         }
 
         // หาผู้เล่นอัตโนมัติถ้าไม่ได้กำหนด
@@ -168,11 +156,6 @@ public class FootstepManager : MonoBehaviour
             if (player != null)
             {
                 playerTransform = player.transform;
-
-            }
-            else
-            {
-
             }
         }
 
@@ -180,19 +163,6 @@ public class FootstepManager : MonoBehaviour
         if (mapManager == null)
         {
             mapManager = FindObjectOfType<MapManager>();
-            if (mapManager == null)
-            {
-                
-            }
-            else
-            {
-               
-            }
-        }
-
-        if (backgroundSoundsList.Count == 0)
-        {
-            
         }
     }
 
@@ -200,70 +170,42 @@ public class FootstepManager : MonoBehaviour
     {
         if (playerTransform == null || mapManager == null)
         {
-            
             return;
         }
 
         Vector2 playerPosition = playerTransform.position;
         FloorType detectedFloorType = mapManager.GetCurrentFloorType(playerPosition);
 
-        
-
         if (detectedFloorType != currentFloorType)
         {
             previousFloorType = currentFloorType;
             currentFloorType = detectedFloorType;
-            
             OnFloorTypeChanged();
         }
     }
 
     private void OnFloorTypeChanged()
     {
-       
-
         if (enableBackgroundAudio)
         {
             PlayBackgroundAudio(currentFloorType);
-        }
-        else
-        {
-           
         }
     }
 
     private void PlayBackgroundAudio(FloorType floorType)
     {
-      
-
         if (!backgroundSoundsDict.ContainsKey(floorType))
         {
-        
             StopBackgroundAudio();
             return;
         }
 
         BackgroundSounds backgroundSound = backgroundSoundsDict[floorType];
-    
 
         if (backgroundSound.backgroundClips.Length == 0)
         {
-      
             StopBackgroundAudio();
             return;
-        }
-
-        // ตรวจสอบ AudioClips
-        for (int i = 0; i < backgroundSound.backgroundClips.Length; i++)
-        {
-            if (backgroundSound.backgroundClips[i] == null)
-            {
-
-            }
-            else
-            {
-
-            }
         }
 
         // หยุด coroutine เก่า
@@ -278,28 +220,22 @@ public class FootstepManager : MonoBehaviour
 
         if (selectedClip == null)
         {
-
             return;
         }
-
-
 
         // เริ่ม fade
         fadeCoroutine = StartCoroutine(FadeToNewBackgroundAudio(selectedClip, backgroundSound.volume, backgroundSound.loop));
 
         lastBackgroundClipIndex[floorType] = clipIndex;
-
     }
 
     private System.Collections.IEnumerator FadeToNewBackgroundAudio(AudioClip newClip, float targetVolume, bool loop)
     {
-
         float startVolume = backgroundAudioSource.volume;
 
         // Fade out เสียงเก่า
         if (backgroundAudioSource.isPlaying)
         {
-            
             for (float t = 0; t < backgroundFadeTime / 2; t += Time.deltaTime)
             {
                 backgroundAudioSource.volume = Mathf.Lerp(startVolume, 0, t / (backgroundFadeTime / 2));
@@ -313,9 +249,7 @@ public class FootstepManager : MonoBehaviour
         backgroundAudioSource.volume = 0;
         backgroundAudioSource.Play();
 
-
         // Fade in เสียงใหม่
-       
         for (float t = 0; t < backgroundFadeTime / 2; t += Time.deltaTime)
         {
             backgroundAudioSource.volume = Mathf.Lerp(0, targetVolume, t / (backgroundFadeTime / 2));
@@ -323,7 +257,6 @@ public class FootstepManager : MonoBehaviour
         }
 
         backgroundAudioSource.volume = targetVolume;
-      
         fadeCoroutine = null;
     }
 
@@ -358,14 +291,12 @@ public class FootstepManager : MonoBehaviour
 
         if (!footstepSoundsDict.ContainsKey(floorType))
         {
-
             return;
         }
 
         FootstepSounds footstepSound = footstepSoundsDict[floorType];
         if (footstepSound.footstepClips.Length == 0)
         {
-
             return;
         }
 
@@ -384,8 +315,6 @@ public class FootstepManager : MonoBehaviour
         lastPlayTime = Time.time;
         lastClipIndex[floorType] = clipIndex;
     }
-
-       
 
     private int GetRandomClipIndex(FloorType floorType, int clipCount)
     {
@@ -421,7 +350,6 @@ public class FootstepManager : MonoBehaviour
         if (backgroundAudioSource != null)
         {
             backgroundAudioSource.volume = Mathf.Clamp01(volume);
-            
         }
     }
 
@@ -436,7 +364,6 @@ public class FootstepManager : MonoBehaviour
 
     public void StopBackgroundAudio()
     {
-      
         if (fadeCoroutine != null)
         {
             StopCoroutine(fadeCoroutine);
@@ -452,7 +379,6 @@ public class FootstepManager : MonoBehaviour
     public void EnableBackgroundAudio(bool enable)
     {
         enableBackgroundAudio = enable;
-       
         if (!enable)
         {
             StopBackgroundAudio();
@@ -465,7 +391,6 @@ public class FootstepManager : MonoBehaviour
 
     public void ForceCheckCurrentTile()
     {
-       
         CheckCurrentTile();
     }
 
@@ -478,21 +403,18 @@ public class FootstepManager : MonoBehaviour
     [ContextMenu("Test Play Grass Background")]
     public void TestPlayGrassBackground()
     {
-       
         PlayBackgroundAudio(FloorType.Grass);
     }
 
     [ContextMenu("Test Play Wood Background")]
     public void TestPlayWoodBackground()
     {
-       
         PlayBackgroundAudio(FloorType.Wood);
     }
 
     [ContextMenu("Start Background Audio Now")]
     public void StartBackgroundAudioNow()
     {
-      
         if (playerTransform != null && mapManager != null)
         {
             Vector2 playerPosition = playerTransform.position;
@@ -500,22 +422,15 @@ public class FootstepManager : MonoBehaviour
             currentFloorType = detectedFloorType;
             PlayBackgroundAudio(currentFloorType);
         }
-        else
-        {
-           
-        }
     }
 
     [ContextMenu("Show Audio Status")]
     public void ShowAudioStatus()
     {
-      
         if (backgroundAudioSource != null)
         {
-  
-       
+            Debug.Log($"Background Audio - Playing: {backgroundAudioSource.isPlaying}, Clip: {backgroundAudioSource.clip?.name}, Volume: {backgroundAudioSource.volume}");
         }
-      
     }
 
     // เมธอดสำหรับเรียกจากภายนอก
@@ -526,6 +441,4 @@ public class FootstepManager : MonoBehaviour
             StartCoroutine(InitialTileCheck());
         }
     }
-
-
 }

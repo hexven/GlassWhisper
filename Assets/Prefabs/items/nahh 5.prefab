@@ -19,7 +19,7 @@ PrefabInstance:
     - target: {fileID: -2292075300803808070, guid: 63542f14cb076f14e8ee9771f0119be7, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 1376273785029882206, guid: 92d0122d84d488a47a7e98b86695b13d, type: 3}
+      objectReference: {fileID: -348344616637950324, guid: df5024fa437418448bb0748789326db9, type: 3}
     - target: {fileID: -2292075300803808070, guid: 63542f14cb076f14e8ee9771f0119be7, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
@@ -27,7 +27,7 @@ PrefabInstance:
     - target: {fileID: 2302510401245973343, guid: 63542f14cb076f14e8ee9771f0119be7, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 1376273785029882206, guid: 92d0122d84d488a47a7e98b86695b13d, type: 3}
+      objectReference: {fileID: -348344616637950324, guid: df5024fa437418448bb0748789326db9, type: 3}
     - target: {fileID: 2640907330044042265, guid: 63542f14cb076f14e8ee9771f0119be7, type: 3}
       propertyPath: m_Name
       value: nahh 5
@@ -58,11 +58,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3371213487178510124, guid: 63542f14cb076f14e8ee9771f0119be7, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 130
+      value: 56.25
       objectReference: {fileID: 0}
     - target: {fileID: 3371213487178510124, guid: 63542f14cb076f14e8ee9771f0119be7, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 130
+      value: 53.125
       objectReference: {fileID: 0}
     - target: {fileID: 3371213487178510124, guid: 63542f14cb076f14e8ee9771f0119be7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -118,7 +118,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8023274806543833871, guid: 63542f14cb076f14e8ee9771f0119be7, type: 3}
       propertyPath: Name
-      value: "\u0E01\u0E23\u0E30\u0E14\u0E32\u0E29\u0E22\u0E31\u0E1A\u0E46"
+      value: "\u0E40\u0E28\u0E29\u0E01\u0E23\u0E30\u0E14\u0E32\u0E29"
       objectReference: {fileID: 0}
     - target: {fileID: 8023274806543833871, guid: 63542f14cb076f14e8ee9771f0119be7, type: 3}
       propertyPath: hasNote
@@ -127,10 +127,10 @@ PrefabInstance:
     - target: {fileID: 8023274806543833871, guid: 63542f14cb076f14e8ee9771f0119be7, type: 3}
       propertyPath: noteImage
       value: 
-      objectReference: {fileID: 1129659197, guid: 01a218afee125b549acf01bb3ae7e57d, type: 3}
+      objectReference: {fileID: 3431393693813644274, guid: f24043b163e8b724db79ac6feac42682, type: 3}
     - target: {fileID: 8023274806543833871, guid: 63542f14cb076f14e8ee9771f0119be7, type: 3}
       propertyPath: Description
-      value: "\u0E2D\u0E30\u0E44\u0E23\u0E40\u0E19\u0E35\u0E48\u0E22..."
+      value: "\u0E01\u0E23\u0E30\u0E14\u0E32\u0E29\u0E16\u0E39\u0E01\u0E09\u0E35\u0E01\u0E02\u0E32\u0E14\u0E2D\u0E48\u0E32\u0E19\u0E44\u0E21\u0E48\u0E23\u0E39\u0E49\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E08\u0E31\u0E1A\u0E43\u0E08\u0E04\u0E27\u0E32\u0E21\u0E44\u0E14\u0E49\u0E22\u0E32\u0E01"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
