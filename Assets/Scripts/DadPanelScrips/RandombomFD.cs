@@ -24,7 +24,8 @@ public class RandomboxFD : MonoBehaviour
         if (getRaddomNubFD == 0)
         {
             qtFD11.text = "คุณชื่ออะไร";
-            qtFD12.text = "คุณคิดว่าทำไมฆาตรกรถึงฆ่าคุณ";
+            qtFD12.text = "คุณอยากให้ฉันทำอะไร";
+            //qtFD12.text = "คุณคิดว่าทำไมฆาตรกรถึงฆ่าคุณ";
             qtFD13.text = "คุณจำได้ไหมว่าอะไรเกิดขึ้นกับคุณ";
         }
 

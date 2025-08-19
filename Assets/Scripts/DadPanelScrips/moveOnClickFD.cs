@@ -77,7 +77,8 @@ public class moveOnClickFD : MonoBehaviour // เปลี่ยนชื่อ�
 
         if (RandomboxFD.getRaddomNubFD == 0 && qtFD == 2)
         {
-            qtFD14.text = "ก็แค่อีคนเนรคุณ";
+            qtFD14.text = "เอาอีแก้วตาไปเข้าคุกให้ได้";
+            //qtFD14.text = "ก็แค่อีคนเนรคุณ";
         }
 
         else if (RandomboxFD.getRaddomNubFD == 1 && qtFD == 2)

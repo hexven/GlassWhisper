@@ -24,7 +24,8 @@ public class RandomboxM : MonoBehaviour
         if (getRaddomNubM == 0)
         {
             qtM11.text = "คุณชื่ออะไร";
-            qtM12.text = "คุณจำได้ไหมว่าอะไรเกิดขึ้นกับคุณ";
+            qtM12.text = "บรรยากาศภายในบ้านเป็นยังไง";
+            //qtM12.text = "คุณจำได้ไหมว่าอะไรเกิดขึ้นกับคุณ";
             qtM13.text = "คุณเห็นหน้าคนร้ายหรือเปล่า";
         }
 
@@ -38,7 +39,8 @@ public class RandomboxM : MonoBehaviour
         else if (getRaddomNubM == 2)
         {
             qtM11.text = "คุณอยากพูดหรือถามอะไรกับใครไหม";
-            qtM12.text = "บรรยากาศภายในบ้านเป็นยังไง";
+            qtM12.text = "คุณจำได้ไหมว่าอะไรเกิดขึ้นกับคุณ";
+            //qtM12.text = "บรรยากาศภายในบ้านเป็นยังไง";
             qtM13.text = "คุณคิดว่าคุณสมควรตายไหม";
         }
     }
