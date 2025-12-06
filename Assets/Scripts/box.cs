@@ -22,7 +22,7 @@ public class box : MonoBehaviour, IInteractable
     }
     private void OpenChest()
     {
-        SoundManager.Instance.PlaySound2D("Click");
+        //SoundManager.Instance.PlaySound2D("Click");
         SetOpened(true);
         if (itemPrefabs)
         {

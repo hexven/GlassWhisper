@@ -25,6 +25,17 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
         Debug.Log("Quitting");
     }
-    
 
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            SceneManager.LoadScene("Bad Ending");
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            SceneManager.LoadScene("Game 2");
+        }
+    }
 }

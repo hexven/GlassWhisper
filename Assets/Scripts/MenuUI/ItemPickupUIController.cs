@@ -31,7 +31,7 @@ public class ItemPickupUIController : MonoBehaviour
 
     public void ShowItemPickup(string itemName,Sprite itemIcon)
     {
-        SoundManager.Instance.PlaySound2D("Pop");
+        SoundManager.Instance.PlaySound2D("pop");
         GameObject newPopup = Instantiate(popupPrefab, transform);
         newPopup.GetComponentInChildren<TMP_Text>().text = itemName;
 

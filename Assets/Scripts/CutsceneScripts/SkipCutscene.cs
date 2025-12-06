@@ -32,5 +32,9 @@ public class SkipCutscene : MonoBehaviour
                 SceneManager.LoadScene(nextSceneName);
             }
         }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            SceneManager.LoadScene(nextSceneName);
+        }
     }
 }

@@ -336,7 +336,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: BAD ENDING
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c792751afa7183742ad4e7cfbaa63e1c, type: 2}
   m_sharedMaterial: {fileID: -2601299296787531419, guid: c792751afa7183742ad4e7cfbaa63e1c, type: 2}
@@ -1865,7 +1865,7 @@ MonoBehaviour:
   - 41
   - 44
   - 51
-  nextSceneName: Main Menu
+  nextSceneName: Game 2
 --- !u!95 &1570300857
 Animator:
   serializedVersion: 7

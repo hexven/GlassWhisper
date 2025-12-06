@@ -545,7 +545,7 @@ MonoBehaviour:
   - 60
   - 63
   - 67
-  nextSceneName: Main Menu
+  nextSceneName: Game 2
 --- !u!1 &249620973
 GameObject:
   m_ObjectHideFlags: 0
@@ -1913,7 +1913,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: GOOD ENDING
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c792751afa7183742ad4e7cfbaa63e1c, type: 2}
   m_sharedMaterial: {fileID: -2601299296787531419, guid: c792751afa7183742ad4e7cfbaa63e1c, type: 2}
